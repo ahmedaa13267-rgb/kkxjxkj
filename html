@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة التمريض المكثف - دفعة 12</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        
+        :root { 
+            --bg-primary: #030712; 
+            --bg-card: rgba(15, 23, 42, 0.85); 
+            --accent-primary: #6366f1; 
+            --accent-secondary: #06b6d4;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+            --text-main: #f8fafc; 
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+        }
+
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: radial-gradient(circle at 50% -20%, #1e1b4b 0%, var(--bg-primary) 70%);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 15px; 
+            box-sizing: border-box; 
+            overflow-x: hidden;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: rgba(99, 102, 241, 0.15);
+            filter: blur(80px);
+            border-radius: 50px;
+            z-index: -1;
+            animation: moveGlow 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes moveGlow {
+            0% { transform: translateY(-50px) translateX(-50px); }
+            100% { transform: translateY(100px) translateX(100px); }
+        }
+
+        .container { 
+            background: var(--bg-card); 
+            padding: 1.75rem; 
+            border-radius: 1.75rem; 
+            width: 100%; 
+            max-width: 750px; 
+            box-shadow: var(--card-shadow); 
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            animation: scaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-gradient);
+        }
+
+        @keyframes scaleUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .shake-effect { animation: shake 0.4s ease-in-out; }
+
+        .hero-banner {
+            text-align: center;
+            margin-bottom: 1.75rem;
+        }
+
+        .hero-icon-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-icon-container::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            opacity: 0.25;
+            animation: pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0.95); opacity: 0.4; }
+            50% { transform: scale(1.2); opacity: 0.1; }
+            100% { transform: scale(0.95); opacity: 0.4; }
+        }
+
+        .hero-icon {
+            font-size: 2.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 1;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(3deg); }
+        }
+
+        h1 { 
+            font-size: 1.65rem; 
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 0.4rem; 
+            text-align: center; 
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .subtitle i { color: var(--accent-secondary); }
+
+        .drive-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(6, 182, 212, 0.12);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            padding: 0.65rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 1.25rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.15);
+        }
+
+        .drive-link-btn:hover {
+            background: rgba(6, 182, 212, 0.22);
+            border-color: #38bdf8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);
+            color: #ffffff;
+        }
+
+        .btn { 
+            background: var(--accent-gradient); 
+            color: white; 
+            border: none; 
+            padding: 1rem 1.25rem; 
+            margin: 0.5rem 0; 
+            width: 100%; 
+            border-radius: 1rem; 
+            font-weight: 700; 
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-sizing: border-box;
+        }
+
+        .btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 12px 25px -4px rgba(99, 102, 241, 0.6); 
+            filter: brightness(1.1);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .question-card { 
+            background: rgba(255, 255, 255, 0.015); 
+            border: 1px solid var(--border-color); 
+            border-radius: 1.25rem; 
+            padding: 1.25rem; 
+            margin-bottom: 1rem; 
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.6rem;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent-gradient);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .q-title { 
+            font-size: 1.1rem; 
+            margin-bottom: 0.5rem; 
+            color: #ffffff; 
+            font-weight: 700; 
+            line-height: 1.5; 
+            direction: ltr; 
+            text-align: left; 
+        }
+        
+        .q-translation { 
+            font-size: 0.93rem; 
+            color: #94a3b8; 
+            margin-bottom: 1.2rem; 
+            direction: rtl; 
+            text-align: right; 
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-right: 3px solid var(--accent-secondary);
+            border-radius: 6px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        
+        .option { 
+            position: relative;
+            background: rgba(15, 23, 42, 0.6); 
+            border: 2px solid rgba(255, 255, 255, 0.06); 
+            color: var(--text-main); 
+            padding: 0.95rem 1rem; 
+            margin: 0.55rem 0; 
+            width: 100%; 
+            border-radius: 0.95rem; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            text-align: left; 
+            font-family: 'Cairo', sans-serif; 
+            font-size: 0.95rem; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            direction: ltr; 
+            box-sizing: border-box;
+        }
+        
+        .option:hover:not(:disabled) { 
+            background: rgba(30, 41, 59, 0.85); 
+            border-color: var(--accent-secondary); 
+            transform: translateX(3px);
+        }
+
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .correct-effect {
+            animation: correctPulse 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(16, 185, 129, 0.22) !important;
+            border-color: #10b981 !important;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.35) !important;
+        }
+
+        .wrong-effect {
+            background: rgba(239, 68, 68, 0.22) !important;
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.35) !important;
+        }
+
+        .correct-icon {
+            color: #10b981;
+            font-size: 1.1rem;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .wrong-icon {
+            color: #ef4444;
+            font-size: 1.1rem;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .floating-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            animation: floatUp 1s ease-out forwards;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            z-index: 10;
+            direction: rtl;
+        }
+
+        .floating-badge-wrong {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            animation: floatUp 1s ease-out forwards;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+            z-index: 10;
+            direction: rtl;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 0; transform: translateY(8px) scale(0.8); }
+            20% { opacity: 1; transform: translateY(0) scale(1.05); }
+            80% { opacity: 1; transform: translateY(-8px) scale(1); }
+            100% { opacity: 0; transform: translateY(-18px); }
+        }
+
+        .explanation { 
+            margin-top: 1.25rem; 
+            padding: 1rem; 
+            background: rgba(6, 182, 212, 0.06); 
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 0.95rem; 
+            color: #a5f3fc; 
+            display: none; 
+            font-size: 0.9rem; 
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .result-box { text-align: right; font-size: 1rem; animation: fadeIn 0.4s ease; }
+        .score-badge { background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(6, 182, 212, 0.12)); border: 1px solid rgba(99, 102, 241, 0.25); padding: 1.25rem; border-radius: 1.25rem; text-align: center; margin-bottom: 1.25rem; }
+        .start-buttons-wrapper { display: flex; flex-direction: column; gap: 10px; margin-top: 1rem; }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .container { padding: 1.25rem; border-radius: 1.25rem; }
+            h1 { font-size: 1.35rem; }
+            .hero-icon-container { width: 75px; height: 75px; }
+            .hero-icon { font-size: 2rem; }
+            .q-title { font-size: 1rem; }
+            .option { font-size: 0.9rem; padding: 0.85rem; }
+            .drive-link-btn { font-size: 0.82rem; padding: 0.55rem 1rem; }
+        }
+  </style>
+ </head>
+ <body>
+  <div class="bg-glow"></div>
+  <audio id="s-correct" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
+  <audio id="s-wrong" src="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3"></audio>
+  <div class="container" id="start-screen">
+   <div class="hero-banner">
+    <div class="hero-icon-container">
+     <i class="fa-solid fa-notes-medical hero-icon"></i>
+    </div>
+    <h1>منصة اختبارات التمريض المكثف</h1>
+    <p class="subtitle"><i class="fa-solid fa-user-graduate"></i> إعداد: MR/ Ahmed Abdelwhab | دفعة 12</p>
+    <a href="https://drive.google.com/drive/folders/1ZHK0B_jO34rHjYW0vidv4dF571BZSMRO" target="_blank" class="drive-link-btn"> <i class="fa-brands fa-google-drive"></i> منصة اختبارات تمريض مكثف دفعة 12 - اضغط هنا </a>
+   </div>
+   <div class="start-buttons-wrapper">
+    <button class="btn" style="background: linear-gradient(135deg, #0284c7, #2563eb);" onclick="startQuiz('cns')"><i class="fa-solid fa-brain"></i> لبدء الاختبار اضغط هنا</button>
+   </div>
+  </div>
+  <div class="container" id="quiz-section" style="display:none;">
+   <h1 id="quiz-main-title" style="font-size: 1.35rem; margin-bottom: 0.75rem; text-align: center;">اختبار الأسئلة</h1>
+   <div class="progress-bar-container">
+    <div class="progress-bar" id="progress-bar"></div>
+   </div>
+   <div id="question-holder"></div>
+  </div>
+  <script>
+const cnsData = [
+    {
+        "qAr": "هو بداية الكلمة في المصطلح، ويسبق الجذر عادةً ويعدّل معناه:",
+        "qEn": "Is the word beginning of the term usually precedes the root and modify the meaning:",
+        "o": ["Prefix", "Root", "Suffix", "vowel"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Prefix. التعليل: البادئة (Prefix) تُوضع في بداية المصطلح الطبي قبل الجذر لتغيير معناه أو تحديد مقصده."
+    },
+    {
+        "qAr": "هو الكلمة الطبية الأساسية، وعادة ما تكون جزءاً من الجسم أو عضواً، ومشتقة من اللاتينية أو اليونانية:",
+        "qEn": "Is a basic medical word, usually body part or organ & derived from Latin or Greek words:",
+        "o": ["Prefix", "Root", "Suffix", "vowel"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Root. التعليل: جذر الكلمة (Root) هو الأساس الهيكلي للمصطلح الطبي والذي يعبر عن العضو أو جزء الجسم."
+    },
+    {
+        "qAr": "هو نهاية الكلمة في المصطلح، ويأتي عادةً بعد جذر الكلمة ويعدّل معناه:",
+        "qEn": "The word ending of the term, usually follow the word root& modify the meaning of the root:",
+        "o": ["Prefix", "Root", "Suffix", "vowel"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Suffix. التعليل: اللاحقة (Suffix) تُضاف في نهاية المصطلح الطبي لتشير إلى حالة مرضية، إجراء جراحي، أو تشخيص."
+    },
+    {
+        "qAr": "يُستخدم حرف الربط المعتل (Combining vowel) لـ:",
+        "qEn": "Combining vowel is used to:",
+        "o": ["Facilitate the pronunciation of words.", "Connect the root with suffix.", "(A+B).", "Modify the meaning."],
+        "a": 2,
+        "e": "الإجابة الصحيحة: (A+B). التعليل: حرف الربط المعتل (مثل حرف o) يربط بين الجذر واللاحقة، ويُستخدم أساساً لتسهيل النطق اللفظي للمصطلح."
+    },
+    {
+        "qAr": "هي أسماء مشتقة من اسم علم، وقد تنشأ من اسم شخص أو مكان أو شيء:",
+        "qEn": "Are names derived from a proper noun, they may originate from the name of a person, place, or thing:",
+        "o": ["Prefix", "Eponyms", "Suffix", "vowel"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Eponyms. التعليل: المسميات المنسوبة (Eponyms) هي المصطلحات الطبية المسمة باسم العالم أو الطبيب المكشَف للمرض أو الحالة."
+    },
+    {
+        "qAr": "مرض الزهايمر هو مثال على:",
+        "qEn": "Alzheimer’s disease is an examples of:",
+        "o": ["Prefix", "Eponyms", "Suffix", "vowel"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Eponyms. التعليل: مرض الزهايمر سُمي نسبة إلى الطبيب الألماني ألوئيس أزهايمر الذي اكتشف الحالة."
+    },
+    {
+        "qAr": "تشمل الأمثلة على المسميات المنسوبة لشخص/عالم (Eponyms):",
+        "qEn": "Examples of eponyms include:",
+        "o": ["Babinski sign.", "CXR.", "Tab", "CPR"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Babinski sign. التعليل: علامة بابينسكي مسمة باسم طبيب الأعصاب جوزيف بابينسكي، بينما الباقي اختصارات طبية."
+    },
+    {
+        "qAr": "هو شكل مختصر للكلمة أو العبارة:",
+        "qEn": "Is a shortened form of a word or phrase?",
+        "o": ["Suffix", "vowel", "Abbreviations.", "Prefix"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Abbreviations. التعليل: الاختصارات (Abbreviations) هي الحروف أو الكلمات القليلة المشتقة اختصاراً للعبارات الطبية الطويلة."
+    },
+    {
+        "qAr": "يمكن أن تكون الاختصارات على شكل:",
+        "qEn": "Abbreviations can be in the form of:",
+        "o": ["Letters", "Shortened words", "Acronyms", "All of the above"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: All of the above. التعليل: تتخذ الاختصارات الطبية أشكالاً متعددة منها أحرف أولية، أو كلمات مقتطعة، أو أوائل كلمات تُنطق ككلمة واحدة (Acronyms)."
+    },
+    {
+        "qAr": "الاختصار الخاص بأشعة الصدر هو:",
+        "qEn": "The abbreviation for chest x-ray is:",
+        "o": ["Babinski sign.", "CXR.", "Tab", "CPR"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: CXR. التعليل: اختصار (CXR) يتكون من الحروف الأولى للعبارة الطبية Chest X-Ray."
+    },
+    {
+        "qAr": "يرمز الاختصار CPR إلى:",
+        "qEn": "The acronym CPR stands for:",
+        "o": ["Cardiopulmonary resuscitation", "Babinski sign.", "Chest x-ray", "Tablet"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Cardiopulmonary resuscitation. التعليل: المصطلح يرمز للإنعاش قلبي رئوي وهو الإجراء الطارئ لإعادة تنشيط الدورة الدموية والتنفس."
+    },
+    {
+        "qAr": "اللاحقة logy تعني:",
+        "qEn": "The suffix logy means:",
+        "o": ["Study, science or specialty.", "Medical diagnosis", "One who studies” or “specialist", "Physical examination"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Study, science or specialty. التعليل: اللاحقة (logy-) تعني دراسة، علم، أو تخصص علمي معين."
+    },
+    {
+        "qAr": "اللاحقة logist تعني:",
+        "qEn": "The suffix logist means:",
+        "o": ["Study, science or specialty.", "Medical diagnosis", "One who studies” or “specialist", "Physical examination"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: One who studies” or “specialist. التعليل: اللاحقة (logist-) تشير إلى الشّخص الخبير، العالم، أو الطبيب المتخصص في مجال علمي محدد."
+    },
+    {
+        "qAr": "هو طبيب متخصص في التخدير:",
+        "qEn": "Is a physician who specializes in anesthesia:",
+        "o": ["Cardiologist", "Neonatologist", "Dermatologist", "Anesthesiologist"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Anesthesiologist. التعليل: يجمع المصطلح بين جذر التخدير (anesthesi/o) ولاحقة الطبيب المتخصص (logist-)."
+    },
+    {
+        "qAr": "طبيب الجلدية (Dermatologist) هو طبيب متخصص في:",
+        "qEn": "Dermatologist a physician who specializes in:",
+        "o": ["Heart disease", "Integumentary system", "Urinary system", "Radiation"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Integumentary system. التعليل: الجلد وملحقاته يُعرف علمياً بالجهاز اللحافي (Integumentary system)."
+    },
+    {
+        "qAr": "يشير إلى الاستئصال الجراحي للزوائد اللحمية (السلائل):",
+        "qEn": "Refer to the excision or removal of polyps:",
+        "o": ["appendectomy", "Salpingectomy", "adrenalectomy", "Polypectomy"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Polypectomy. التعليل: يتكون المصطلح من جذر الزوائد اللحمية (Polyp) ولاحقة الاستئصال الجراحي (ectomy-)."
+    },
+    {
+        "qAr": "يشير إلى الاستئصال الجراحي للغدد الكظرية:",
+        "qEn": "Refer to the excision or removal of adrenal glands:",
+        "o": ["appendectomy", "Salpingectomy", "adrenalectomy", "Polypectomy"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: adrenalectomy. التعليل: يتكون المصطلح من جذر الغدة الكظرية (adrenal) ولاحقة الاستئصال (ectomy-)."
+    },
+    {
+        "qAr": "اللاحقة “-ectomy” تعني:",
+        "qEn": "The suffix “-ectomy” means:",
+        "o": ["Surgical removal.", "Surgical puncture.", "Process of loosening.", "Surgical repair."],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Surgical removal. التعليل: اللاحقة (ectomy-) تُستخدم دائماً للتعبير عن الاستئصال والقطع الجراحي لأنسجة أو أعضاء."
+    },
+    {
+        "qAr": "اللاحقة “-centesis” تعني:",
+        "qEn": "The suffix “-centesis” means:",
+        "o": ["Surgical removal.", "Surgical puncture.", "Process of loosening.", "Surgical repair."],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Surgical puncture. التعليل: اللاحقة (centesis-) تعني البزل أو الثقب الجراحي بغرض سحب السوائل للتحليل أو العلاج."
+    },
+    {
+        "qAr": "تجميل الأنف (Rhinoplasty) هو جراحة تجميلية لـ:",
+        "qEn": "Rhinoplasty is a plastic surgery of the:",
+        "o": ["Nose", "Eye", "Ear", "Mouth"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Nose. التعليل: الجذر (Rhin/o) يعني الأنف، واللاحقة (plasty-) تعني التعديل أو الإصلاح التجميلي."
+    },
+    {
+        "qAr": "التهاب الكبد (Hepatitis) يشير إلى حالة التهابية في:",
+        "qEn": "Hepatitis refers to an inflammatory condition of the:",
+        "o": ["Heart", "liver.", "Spleen", "Brain"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: liver. التعليل: الجذر (Hepat/o) يعني الكبد، واللاحقة (itis-) تعني الالتهاب."
+    },
+    {
+        "qAr": "يشير إلى اضطراب أو مرض يُلاحظ فيه التغير في الحالة الصحية بواسطة المريض نفسه:",
+        "qEn": "Indicates a disorder or disease in which changes in health status are perceived by the client.",
+        "o": ["Symptoms", "Sings", "Diagnosis", "Examination"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Symptoms. التعليل: الأعراض (Symptoms) هي الشكوى الذاتية التي يشعر بها المريض فقط ولا يمكن للملاحظ القياس المباشر لها مثل الألم."
+    },
+    {
+        "qAr": "مصطلح Hyperemesis يعني مفرط في:",
+        "qEn": "Hyperemesis means excessive:",
+        "o": ["Fluids", "Vomiting.", "Blood", "Oxygen"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Vomiting. التعليل: البادئة (Hyper-) تعني فرط أو زيادة، والجذر (emesis) يعني القيء."
+    },
+    {
+        "qAr": "ألم المفاصل (Arthralgia) هو:",
+        "qEn": "Arthralgia is:",
+        "o": ["Joint pain.", "Muscle pain", "Back pain", "Chest pain"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Joint pain. التعليل: الجذر (Arthr/o) يعني المفصل، واللاحقة (algia-) تعني الشعور بالألم."
+    },
+    {
+        "qAr": "اللاحقة –itis تعني:",
+        "qEn": "The suffix –itis mean:",
+        "o": ["Swelling", "Vomiting.", "inflammation", "pain"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: inflammation. التعليل: اللاحقة (itis-) هي اللاحقة المعيارية الدالة على الالتهاب في المصطلحات الطبية."
+    },
+    {
+        "qAr": "جزء الكلمة lact/o يعني:",
+        "qEn": "The word part lact/o mean:",
+        "o": ["Milk", "Sugar.", "Blood", "fat"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Milk. التعليل: الجذر اللاتيني (lact/o) يُستخدم للإشارة إلى الحليب وتفرزاته."
+    },
+    {
+        "qAr": "جزء الكلمة adip/o أو lip/o يعني:",
+        "qEn": "The word part adip/o, lip/o mean:",
+        "o": ["Milk", "Sugar.", "Blood", "fat"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: fat. التعليل: كلا الجذرين (adip/o و lip/o) يُستخدمان طبياً للإشارة إلى الدهون والأنسجة الدهنية."
+    },
+    {
+        "qAr": "البادئة uni تعني:",
+        "qEn": "The prefix uni mean:",
+        "o": ["one", "Two.", "Three", "Four"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: one. التعليل: البادئة اللاتينية (uni-) تعني أحادي أو شيء واحد."
+    },
+    {
+        "qAr": "جزء الكلمة glyc/o يعني:",
+        "qEn": "The word part glyc/o mean:",
+        "o": ["Milk", "Sugar.", "Blood", "fat"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Sugar. التعليل: الجذر اليوناني (glyc/o) يعبر عن السكر أو الجلوكوز."
+    },
+    {
+        "qAr": "البادئة tetra تعني:",
+        "qEn": "The prefix tetra mean:",
+        "o": ["one", "Two.", "Three", "Four"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Four. التعليل: البادئة (tetra-) تعني أربعة أو رباعي."
+    },
+    {
+        "qAr": "البادئة multi- أو poly- تعني:",
+        "qEn": "The prefix multi-, poly- mean :",
+        "o": ["None", "First.", "Above", "many"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: many. التعليل: كلا البادئتين (multi- و poly-) تعنيان التعدد أو الكثرة."
+    },
+    {
+        "qAr": "البادئة nulli تعني:",
+        "qEn": "The prefix nulli mean:",
+        "o": ["None", "First.", "Above", "many"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: None. التعليل: البادئة (nulli-) تعني انعدام وجود الشيء أو لا شيء."
+    },
+    {
+        "qAr": "البادئة primi- تعني:",
+        "qEn": "The prefix primi-mean:",
+        "o": ["None", "First.", "Above", "many"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: First. التعليل: البادئة (primi-) تشير إلى الأسبقية أو الشيء الأول."
+    },
+    {
+        "qAr": "البادئة endo- تعني:",
+        "qEn": "The prefix endo -mean:",
+        "o": ["Away from", "Toward", "Within", "Inside"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Inside. التعليل: البادئة (endo-) تعني الداخل أو بالداخل."
+    },
+    {
+        "qAr": "البادئة intra- تعني:",
+        "qEn": "The prefix intra -mean:",
+        "o": ["Away from", "Toward", "Within", "Inside"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Within. التعليل: البادئة (intra-) تعني في داخل الحدود أو بين طيات الشيء (Within)."
+    },
+    {
+        "qAr": "البادئة ab- تعني:",
+        "qEn": "The prefix ab-mean:",
+        "o": ["Away from", "Toward", "Within", "Inside"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Away from. التعليل: البادئة (ab-) تشير للابتعاد أو الحيد عن المركز."
+    },
+    {
+        "qAr": "البادئة ad- تعني:",
+        "qEn": "The prefix ad-mean:",
+        "o": ["Away from", "Toward", "Within", "Inside"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Toward. التعليل: البادئة (ad-) تشير إلى الاقتراب أو الاتجاه نحو الشيء."
+    },
+    {
+        "qAr": "البادئة brady- تعني:",
+        "qEn": "The prefix brady-mean:",
+        "o": ["Slow", "Fast", "Bad", "without"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Slow. التعليل: البادئة (brady-) تعني البطء أو الانخفاض عن المعدل الطبيعي."
+    },
+    {
+        "qAr": "البادئة tachy- تعني:",
+        "qEn": "The prefix tachy-mean:",
+        "o": ["Slow", "Fast", "Bad", "without"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Fast. التعليل: البادئة (tachy-) تعني التسارع أو الزيادة فوق المعدل."
+    },
+    {
+        "qAr": "البادئة mal تعني:",
+        "qEn": "The prefix mal mean:",
+        "o": ["Slow", "Fast", "Bad", "without"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Bad. التعليل: البادئة (mal-) تعني سيء، خلل، أو سوء الإداء."
+    },
+    {
+        "qAr": "البادئة a- أو an- تعني:",
+        "qEn": "The prefix a-, an-mean:",
+        "o": ["Slow", "Fast", "Bad", "without"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: without. التعليل: البادئتان (a- و an-) تفيدان النفي والانعدام (بدون/بدون وجود)."
+    },
+    {
+        "qAr": "الشكل المركّب alb/o, albin/o, leuk/o يعني:",
+        "qEn": "The Combining Form alb/o, albin/o, leuk/o (leuc/o) mean:",
+        "o": ["White", "Red", "Green", "Blue"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: White. التعليل: الأشكال الجذعية (alb/o, albin/o, leuk/o) تعبر جميعها عن اللون الأبيض."
+    },
+    {
+        "qAr": "الشكل المركّب chlor/o يعني:",
+        "qEn": "The Combining Form chlor/o mean:",
+        "o": ["White", "Red", "Green", "Blue"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Green. التعليل: الجذر (chlor/o) يدل على اللون الأخضر."
+    },
+    {
+        "qAr": "الشكل المركّب erythr/o يعني:",
+        "qEn": "The Combining Form erythr/o mean:",
+        "o": ["White", "Red", "Green", "Blue"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Red. التعليل: الجذر (erythr/o) يدل طبياً على اللون الأحمر مثل كريات الدم الحمراء (Erythrocytes)."
+    },
+    {
+        "qAr": "الشكل المركّب cyano/o يعني:",
+        "qEn": "The Combining Form cyano/o mean:",
+        "o": ["White", "Red", "Green", "Blue"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Blue. التعليل: الجذر (cyan/o) يدل على اللون الأزرق أو الزرقة الناتجة عن نقص الأكسجين (Cyanosis)."
+    },
+    {
+        "qAr": "الحد المقبول يُعرف بـ:",
+        "qEn": "Acceptable limit is known as:",
+        "o": ["Normal range", "Pathologic", "Diagnosis", "Prognosis"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Normal range. التعليل: المعدل الطبيعي (Normal range) هو النطاق المعتمد والمقبول في الفحوصات والقياسات الحيوية."
+    },
+    {
+        "qAr": "الحالة التي تتضمن عملية مرضية تُعرف بـ:",
+        "qEn": "Condition involving a disease process is known as:",
+        "o": ["Normal range", "Pathologic", "Diagnosis", "Prognosis"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Pathologic. التعليل: المصطلح (Pathologic) يعني مرضي أو متعلق بالعمليات والخلل المرضي."
+    },
+    {
+        "qAr": "تسمية المرض أو الحالة بناءً على تقييم علمي يُعرف بـ:",
+        "qEn": "Naming a disease or condition based on scientific evaluation is known as:",
+        "o": ["Normal range", "Pathologic", "Diagnosis", "Prognosis"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Diagnosis. التعليل: التشخيص (Diagnosis) هو التحديد والتعرف العلمي الدقيق على طبيعة المرض."
+    },
+    {
+        "qAr": "النتيجة المتوقعة لمرض ما تُعرف بـ:",
+        "qEn": "Anticipated outcome of a disease known as:",
+        "o": ["Normal range", "Pathologic", "Diagnosis", "Prognosis"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Prognosis. التعليل: التكهن بمسار المرض (Prognosis) هو التوقع العلمي المستقبلي لتطور المرض والشفاء منه."
+    },
+    {
+        "qAr": "يُختصر النبض (Pulse) بـ:",
+        "qEn": "Pulse is Abbreviated as:",
+        "o": ["(P)", "(R)", "(BP)", "(T)"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: (P). التعليل: الحرف (P) هو الاختصار الطبي القياسي المعترف به للنبض."
+    },
+    {
+        "qAr": "تمدد الشريان يُشار إليه بـ:",
+        "qEn": "Expansion of an artery referred to as:",
+        "o": ["Heart beats", "Pulse rate", "Respiratory rate", "Blood pressure"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Heart beats. التعليل: التمدد الشرياني المحسوس يمثل الموجه الناجمة عن ضربات القلب (Heart beats)."
+    },
+    {
+        "qAr": "هو عدد ضربات القلب في الدقيقة:",
+        "qEn": "Is the number of heart beats per minute:",
+        "o": ["Heart beats", "Pulse rate", "Respiratory rate", "Blood pressure"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Pulse rate. التعليل: معدل النبض (Pulse rate) يُعبر عن عدد الانقباضات والضربات القلبية المنتجة خلال دقيقة."
+    },
+    {
+        "qAr": "يُختصر التنفس (Respiration) بـ:",
+        "qEn": "Respiration is Abbreviated as:",
+        "o": ["(P)", "(R)", "(BP)", "(T)"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: (R). التعليل: الحرف (R) يرمز عالمياً لمعدل التنفس ضمن العلامات الحيوية."
+    },
+    {
+        "qAr": "قياس تركيز الأكسجين هو:",
+        "qEn": "Measure of the concentration of oxygen is :",
+        "o": ["Respiratory rate", "Blood pressure", "Oxygen saturation", "Pulse"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Oxygen saturation. التعليل: نسبة تشبع الأكسجين (Oxygen saturation) تقيس درجة تشبع الهيموجلوبين بالأكسجين."
+    },
+    {
+        "qAr": "يُستخدم جهاز مقياس تأكسج النبض لقياس:",
+        "qEn": "pulse oximeter is used to measured:",
+        "o": ["Respiratory rate", "Blood pressure", "Oxygen saturation", "Pulse"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Oxygen saturation. التعليل: جهاز Pulse oximeter يُوضع على الصبابة لقياس نسبة تشبع الأكسجين غير جراحياً."
+    },
+    {
+        "qAr": "شعور غير مريح ن الناتج عن منبهات شديدة أو ضارة:",
+        "qEn": "Unpleasant feeling caused by intense or damaging stimuli:",
+        "o": ["Pain", "Stress", "Anxiety", "Coma"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Pain. التعليل: الألم (Pain) يُعرف حسياً وطبياً بالاستجابة المزعجة للمحفزات الضارة أو المؤذية للأنسجة."
+    },
+    {
+        "qAr": "طريقة فحص يستخدم فيها الفاحص العينين للملاحظة، مثل التحقق من لون البشرة:",
+        "qEn": "Method of examination where examiner use eyes to observe e.g. checking for skin color:",
+        "o": ["Inspection", "Palpation", "Percussion", "Auscultation"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Inspection. التعليل: المعاينة (Inspection) هي أولى خطوات الفحص البدني وتعتمد على الملاحظة البصرية الدقيقة."
+    },
+    {
+        "qAr": "طريقة فحص يستخدم فيها الفاحص اليدين للتحسس والملمس والحجم والموقع:",
+        "qEn": "Method of examination where examiner use hands to feel the texture, size, consistency, and location of body parts:",
+        "o": ["Inspection", "Palpation", "Percussion", "Auscultation"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Palpation. التعليل: اللمس أو الجس (Palpation) يعتمد على استخدام أصابع اليد لتحسس الأعضاء والأنسجة."
+    },
+    {
+        "qAr": "طريقة فحص يستخدم فيها الفاحص أطراف الأصابع للنقر على جزء من الجسم لتحديد الحجم والحدود:",
+        "qEn": "Method of examination where examiner use the fist or fingertips are to tap the body part to determine the size, borders, and consistency of body organs:",
+        "o": ["Inspection", "Palpation", "Percussion", "Auscultation"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Percussion. التعليل: القرع (Percussion) هو النقر الخفيف لإحداث أصوات معينة تقيم طبيعة العضو أسفله."
+    },
+    {
+        "qAr": "طريقة فحص يستخدم فيها الفاحص السماعة الطبية للاستماع للأصوات داخل الجسم:",
+        "qEn": "Method of examination where examiner use A stethoscope to listen sounds within the body:",
+        "o": ["Inspection", "Palpation", "Percussion", "Auscultation"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Auscultation. التعليل: التسمع (Auscultation) يُقصد به الاستماع للأصوات الداخلية كأصوات القلب والرئة باستخدام السماعة."
+    },
+    {
+        "qAr": "جزء الكلمة albumin/o يعني:",
+        "qEn": "The word part albumin/o mean:",
+        "o": ["albumin", "process", "action", "urine"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: albumin. التعليل: الجذر (albumin/o) يشير بوضوح إلى بروتين الألبومين."
+    },
+    {
+        "qAr": "جزء الكلمة ation يعني:",
+        "qEn": "The word part ation mean:",
+        "o": ["albumin", "process", "action", "urine"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: process. التعليل: اللاحقة (ation-) تشير إلى العملية أو الإجراء."
+    },
+    {
+        "qAr": "جزء الكلمة uria يعني:",
+        "qEn": "The word part uria mean:",
+        "o": ["albumin", "process", "action", "urine"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: urine. التعليل: اللاحقة (uria-) تشير إلى البول أو التبول."
+    },
+    {
+        "qAr": "الشكل المركّب cyst/o يعني:",
+        "qEn": "The combining form cyst/o mean:",
+        "o": ["renal pelvis", "glomerulus", "bladder", "kidney"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: bladder. التعليل: الجذر (cyst/o) يعبر طبياً عن المثانة البولية."
+    },
+    {
+        "qAr": "التهاب كبيبات الكلى (Glomerulonephritis) هو التهاب في:",
+        "qEn": "Glomerulonephritis is an inflammation of the:",
+        "o": ["glomeruli", "renal pelvis", "bladder", "kidney"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: glomeruli. التعليل: يتكون المصطلح من الكبيبات (glomerul/o) والكلية (nephr/o) والالتهاب (itis-)."
+    },
+    {
+        "qAr": "الشكل المركّب pyel/o يعني:",
+        "qEn": "The combining form pyel/o mean:",
+        "o": ["renal pelvis", "glomerulus", "bladder", "kidney"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: renal pelvis. التعليل: الجذر (pyel/o) يعبر عن حوض الكلية."
+    },
+    {
+        "qAr": "التهاب حوض الكلى (Pyelitis) هو التهاب في:",
+        "qEn": "Pyelitis is the inflammation of the:",
+        "o": ["renal pelvis", "glomerulus", "bladder", "kidney"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: renal pelvis. التعليل: الكلمة تتكون من حوض الكلية (pyel) متبوعاً بلاحقة الالتهاب (itis-)."
+    },
+    {
+        "qAr": "وجود السكر في البول يُعرف بـ Glycosuria، وهو وجود ---------- في البول:",
+        "qEn": "Glycosuria is the presence of ---------- in the urine:",
+        "o": ["Sugar", "protein", "pus", "ketones"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Sugar. التعليل: الجذر (glycos) يعبر عن السكر واللاحقة (uria) تعني البول."
+    },
+    {
+        "qAr": "البول البروتيني (Proteinuria) هو وجود ---------- في البول:",
+        "qEn": "Proteinuria is the presence of ---------- in the urine:",
+        "o": ["Sugar", "protein", "pus", "ketones"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: protein. التعليل: الكلمة مشتقة من بروتين (Protein) واللاحقة البولية (uria-)."
+    },
+    {
+        "qAr": "البول الصديدي (Pyuria) هو وجود ---------- في البول:",
+        "qEn": "Pyuria is the presence of ---------- in the urine:",
+        "o": ["Sugar", "protein", "pus", "ketones"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: pus. التعليل: الجذر (Py/o) يعني الصديد، واللاحقة (uria) تعني البول."
+    },
+    {
+        "qAr": "البول الكيتوني (Ketonuria) هو وجود ---------- في البول:",
+        "qEn": "Ketonuria is the presence of ---------- in the urine:",
+        "o": ["Sugar", "protein", "pus", "ketones"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: ketones. التعليل: الكلمة تشير لوجود أجسام الكيتون (Ketones) مفرطة في البول."
+    },
+    {
+        "qAr": "تضخم الكلى يُعرف بـ:",
+        "qEn": "Enlargement of the kidneys known as:",
+        "o": ["Nephromegaly", "Nephritis", "Dysuria", "Polyuria"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Nephromegaly. التعليل: الكلمة تتكون من جذر الكلية (Nephr/o) ولاحقة التضخم (megaly-)."
+    },
+    {
+        "qAr": "التهاب الكلية يُعرف بـ:",
+        "qEn": "Inflammation of the kidney known as:",
+        "o": ["Nephromegaly", "Nephritis", "Dysuria", "Polyuria"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Nephritis. التعليل: يتكون المصطلح من جذر الكلية (nephr) ولاحقة الالتهاب (itis-)."
+    },
+    {
+        "qAr": "التبول المؤلم يُعرف بـ:",
+        "qEn": "Painful urination known as:",
+        "o": ["Nephromegaly", "Nephritis", "Dysuria", "Polyuria"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Dysuria. التعليل: البادئة (Dys-) تعني الصعوبة أو الألم، واللاحقة (uria) تعني البول."
+    },
+    {
+        "qAr": "التبول المفرط يُعرف بـ:",
+        "qEn": "Excessive urination known as:",
+        "o": ["Nephromegaly", "Nephritis", "Dysuria", "Polyuria"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Polyuria. التعليل: البادئة (Poly-) تعني الفرط أو الزيادة، واللاحقة (uria) تعني البول."
+    },
+    {
+        "qAr": "جزء الكلمة cervic/o يعني:",
+        "qEn": "The word part cervic/o mean:",
+        "o": ["Cervix", "vagina", "ovary", "tube"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Cervix. التعليل: الجذر (cervic/o) يشير إلى عنق الرحم (أو الرقبة بصفة عامة)."
+    },
+    {
+        "qAr": "جزء الكلمة colp/o يعني:",
+        "qEn": "The word part colp/o mean:",
+        "o": ["Cervix", "vagina", "ovary", "tube"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: vagina. التعليل: الجذر اليوناني (colp/o) يعبر طبياً عن المهبل."
+    },
+    {
+        "qAr": "جزء الكلمة hyster/o يعني:",
+        "qEn": "The word part hyster/o, mean:",
+        "o": ["Cervix", "vagina", "ovary", "uterus"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: uterus. التعليل: الجذر (hyster/o) يشير تشريحياً إلى الرحم."
+    },
+    {
+        "qAr": "جزء الكلمة salping/o يعني:",
+        "qEn": "The word part salping/o mean:",
+        "o": ["Cervix", "vagina", "ovary", "tube"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: tube. التعليل: الجذر (salping/o) يعبر عن الأنبوب وخاصة قناة فالوب."
+    },
+    {
+        "qAr": "جزء الكلمة Oophor/o يعني:",
+        "qEn": "The word part Oophor/o, mean:",
+        "o": ["Cervix", "vagina", "ovary", "tube"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: ovary. التعليل: الجذر (oophor/o) يعبر طبياً عن المبيض."
+    },
+    {
+        "qAr": "نزيف الرحم غير المنتظم بين الدورات الشهرية المنتظمة يُعرف بـ:",
+        "qEn": "Irregular uterine bleeding in between regular menstrual periods is known as",
+        "o": ["Metrorrhagia.", "Dysmenorrhea", "Amenorrhea", "Menorrhagia"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Metrorrhagia. التعليل: الجذر (metr/o) يعني الرحم، واللاحقة (rrhagia) تعني النزيف الغزير غير المنتظم بين الدورات."
+    },
+    {
+        "qAr": "فحص عنق الرحم باستخدام جهاز مكبر خاص يُعرف بـ:",
+        "qEn": "Examination of the cervix using a special magnifying device known as",
+        "o": ["Colposcopy", "Hysteroscopy", "Laparoscopy", "Hysterosalpingogram"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Colposcopy. التعليل: يتكون المصطلح من المهبل/عنق الرحم (colp/o) وفحص المناظير (scopy-)."
+    },
+    {
+        "qAr": "فحص بالأشعة السينية للرحم وقناتي فالوب باستخدام صبغة خاصة:",
+        "qEn": "X-ray examination of the uterus and fallopian tubes with the use of a radi- opaque dye:",
+        "o": ["Colposcopy", "Hysteroscopy", "Laparoscopy", "Hysterosalpingogram"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Hysterosalpingogram. التعليل: يتكون المصطلح من الرحم (hyster) والأنابيب (salpingo) وصورة الأشعة (gram)."
+    },
+    {
+        "qAr": "غياب الطمث (الدورة الشهرية) يُعرف بـ:",
+        "qEn": "Absence of menstruation:",
+        "o": ["Metrorrhagia.", "Dysmenorrhea", "Amenorrhea", "Menorrhagia"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Amenorrhea. التعليل: البادئة النافية (A-) تعني انعدام، واللاحقة (menorrhea) تعني التدفق الحيضي."
+    },
+    {
+        "qAr": "عسر أو ألم الطمث يُعرف بـ:",
+        "qEn": "Difficult or painful menstruation",
+        "o": ["Metrorrhagia.", "Dysmenorrhea", "Amenorrhea", "Menorrhagia"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Dysmenorrhea. التعليل: البادئة (Dys-) تشير للتعسر والألم أثناء الدورة الشهرية."
+    },
+    {
+        "qAr": "غزارة الطمث غير الطبيعية تُعرف بـ:",
+        "qEn": "Abnormally heavy menstruation",
+        "o": ["Metrorrhagia.", "Dysmenorrhea", "Amenorrhea", "Menorrhagia"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Menorrhagia. التعليل: المصطلح يصف الغزارة والنزيف المفرط في أيام الدورة الشهرية نفسها."
+    },
+    {
+        "qAr": "اللاحقة -natal تشير إلى:",
+        "qEn": "The suffix -natal refers to:",
+        "o": ["Birth.", "Parity", "Pregnancy", "Menstruation"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Birth. التعليل: اللاحقة (natal-) تشير تشريحياً إلى عملية الولادة أو الميلاد."
+    },
+    {
+        "qAr": "التهاب الثدي يُعرف بـ:",
+        "qEn": "Inflammation of the breast:",
+        "o": ["Mammography", "Lumpectomy", "Mastectomy", "Mastitis"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Mastitis. التعليل: الجذر (mast/o) يعني الثدي، واللاحقة (itis-) تعني التهاب."
+    },
+    {
+        "qAr": "استئصال الثدي يُعرف بـ:",
+        "qEn": "Removal of the breast:",
+        "o": ["Mammography", "Lumpectomy", "Mastectomy", "Mastitis"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Mastectomy. التعليل: الجذر (mast/o) يعني الثدي، واللاحقة (ectomy-) تعني الاستئصال الجراحي."
+    },
+    {
+        "qAr": "------------- هي الطبقة السطحية من الجلد.",
+        "qEn": "------------- is the superficial layer of the skin.",
+        "o": ["Epidermis", "subcutaneous", "fat layer", "Dermis layer"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Epidermis. التعليل: تتكون من البادئة (Epi-) بمعنى فوق/سطحي، والجذر (dermis) أي الجلد."
+    },
+    {
+        "qAr": "البادئة epi تعني:",
+        "qEn": "The prefix epi mean:",
+        "o": ["Below", "Above", "Through", "Between"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Above. التعليل: البادئة (epi-) تعني فوق أو أعلى."
+    },
+    {
+        "qAr": "جزء الكلمة cutane يعني:",
+        "qEn": "The word part cutane mean:",
+        "o": ["Fat", "skin", "Blood", "Endocrine"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: skin. التعليل: الجذر (cutane) يشير إلى الجلد."
+    },
+    {
+        "qAr": "الشكل المركّب cutane/o أو derm/a يعني:",
+        "qEn": "The combining form cutane/o, derm/a, mean:",
+        "o": ["Fat", "skin", "Blood", "Endocrine"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: skin. التعليل: الجذور (cutane/o, derm/a) ترمز جميعها للجلد."
+    },
+    {
+        "qAr": "الشكل المركّب follicul/o يعني:",
+        "qEn": "The combining form follicul/o mean:",
+        "o": ["Fat", "skin", "Blood", "follicle"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: follicle. التعليل: الجذر (follicul/o) يعبر عن بصيلات الشعر أو الجريبات."
+    },
+    {
+        "qAr": "ترقق البشرة يُعرف بـ:",
+        "qEn": "Thinning of the epidermis known as:",
+        "o": ["Vesicle", "Pustule", "Fissures", "Atrophy"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Atrophy. التعليل: الضمور (Atrophy) يصف نقصان وانكماش حجم الخلية أو الأنسجة كترقق الجلد."
+    },
+    {
+        "qAr": "التشققات في الجلد تُسمى:",
+        "qEn": "Splits in the skin called:",
+        "o": ["Vesicle", "Pustule", "Fissures", "Atrophy"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Fissures. التعليل: الشقوق (Fissures) هي الفجوات الطولية والتصدعات الجلدية."
+    },
+    {
+        "qAr": "كيس مليء بالسائل يُسمى:",
+        "qEn": "A fluid-filled sac called:",
+        "o": ["Vesicle", "Pustule", "Fissures", "Atrophy"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Vesicle. التعليل: الحويصلة (Vesicle) عبارة عن بروز جلدي منتفخ يحتوي على سائل شفاف."
+    },
+    {
+        "qAr": "كيس مليء بالصديد يُسمى:",
+        "qEn": "A pus- filled sac called:",
+        "o": ["Vesicle", "Pustule", "Fissures", "Atrophy"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Pustule. التعليل: البثرة (Pustule) هي فقاعة جلدية تحتوي بداخلها على قيح/صديد."
+    },
+    {
+        "qAr": "تمزق أنسجة الجسم يُعرف بـ:",
+        "qEn": "Tearing of body tissue known as:",
+        "o": ["Laceration", "Incision", "Puncture", "Abrasion"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Laceration. التعليل: تهتك الجلد (Laceration) هو الجرح التمزقي غير المنتظم للأنسجة."
+    },
+    {
+        "qAr": "القطع الجراحي أو الجرح النظيف يُعرف بـ:",
+        "qEn": "A surgical cut or clean-cut wound known as:",
+        "o": ["Laceration", "Incision", "Puncture", "Abrasion"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Incision. التعليل: الشق الجراحي (Incision) هو الجرح الحاد والنظيف المحدث بالمشرط."
+    },
+    {
+        "qAr": "ثقب صغير ناتج عن جسم صغير يُعرف بـ:",
+        "qEn": "A small hole caused by a small object known as:",
+        "o": ["Laceration", "Incision", "Puncture", "Abrasion"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Puncture. التعليل: جرح الوخز (Puncture) ينتج عن دخول أداة مدببة رفيعة كالإبر."
+    },
+    {
+        "qAr": "الجروح السطحية أو الخدوش التي تكشط البشرة تُعرف بـ:",
+        "qEn": "Shallow wounds or scrapes that tear or rub off the epidermis known as:",
+        "o": ["Laceration", "Incision", "Puncture", "Abrasion"],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Abrasion. التعليل: السحجات والخدوش (Abrasion) ينتج عنها كشط للطبقات السطحية للبشرة."
+    },
+    {
+        "qAr": "إصابات الأنسجة الناتجة عن التعرض الشديد للحرارة أو المواد الكيميائية:",
+        "qEn": "Tissue injuries caused by extreme exposure to heat, chemicals:",
+        "o": ["Laceration", "Incision", "Puncture", "Burns "],
+        "a": 3,
+        "e": "الإجابة الصحيحة: Burns . التعليل: الحروق (Burns) هي إصابات جراء الحرارة أو الإشعاع أو الكيميائيات."
+    },
+    {
+        "qAr": "الجهاز الهيكلي العضلي مسؤول عن:",
+        "qEn": "The musculoskeletal system is responsible for:",
+        "o": ["Digestion", "Movement and support", "Hormone secretion", "Urine formation"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Movement and support. التعليل: الجهاز العضلي الهيكلي يوفر الدعامة للبدن والحركة الحركية."
+    },
+    {
+        "qAr": "الشكل المركّب “oste/o” يشير إلى:",
+        "qEn": "The combining form “oste/o” refers to:",
+        "o": ["Muscle", "Bone", "Joint", "Nerve"],
+        "a": 1,
+        "e": "الإجابة الصحيحة: Bone. التعليل: الجذر اليوناني (oste/o) يعبر تشريحياً عن العظام."
+    },
+    {
+        "qAr": "التهاب العظام يُسمى:",
+        "qEn": "Inflammation of bone is called:",
+        "o": ["Myositis", "Arthritis", "Osteitis", "Dermatitis"],
+        "a": 2,
+        "e": "الإجابة الصحيحة: Osteitis. التعليل: يتكون من جذر العظم (oste) ولاحقة الالتهاب (itis-)."
+    },
+    {
+        "qAr": "الإصلاح الجراحي للعظام هو:",
+        "qEn": "Surgical repair of bone is:",
+        "o": ["Osteoplasty", "Myoplasty", "Dermoplasty", "Nephroplasty"],
+        "a": 0,
+        "e": "الإجابة الصحيحة: Osteoplasty. التعليل: يتكون من جذر العظم (oste) ولاحقة التخاط أو الاصلاح (plasty-)."
+    },
+    {
+        "qAr": "الاستئصال الجراحي للغضروف يُسمى:",
+        "qEn": "The surgical removal or excision of cartilage is called:",
+        "o": ["Chondrectomy", "Chondritis", "
